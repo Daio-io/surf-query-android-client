@@ -19,7 +19,7 @@ public final class ResponseTransformer {
             return results;
         }
         JSONArray jsonArray = responseObj.getJSONArray("response");
-        for (int i = 0; i < jsonArray.length(); i++) {
+        for (int i = 0, len = jsonArray.length(); i < len; i++) {
             JSONObject object = jsonArray.getJSONObject(i);
 
             long timestamp = object.getLong("timestamp");

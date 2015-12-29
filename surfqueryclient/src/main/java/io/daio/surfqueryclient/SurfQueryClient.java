@@ -38,10 +38,14 @@ public final class SurfQueryClient {
             @Override
             public void onSuccess(String url, String resultBody) {
                 try {
-                    List<SurfQueryResult> results = responseTransformer.transform(resultBody);
-                    onSuccessListener.onSuccess(url, results);
+                    if (onSuccessListener != null) {
+                        List<SurfQueryResult> results = responseTransformer.transform(resultBody);
+                        onSuccessListener.onSuccess(url, results);
+                    }
                 } catch (JSONException e) {
-                    onFailureListener.onFailure(url, new SurfQueryException(e.getMessage(), e));
+                    if (onFailureListener != null) {
+                        onFailureListener.onFailure(url, new SurfQueryException(e.getMessage(), e));
+                    }
                 }
             }
 
@@ -49,7 +53,9 @@ public final class SurfQueryClient {
 
             @Override
             public void onFailure(String url, IOException exception) {
-                onFailureListener.onFailure(url, new SurfQueryException(exception.getMessage(), exception));
+                if (onFailureListener != null) {
+                    onFailureListener.onFailure(url, new SurfQueryException(exception.getMessage(), exception));
+                }
             }
         });
 
