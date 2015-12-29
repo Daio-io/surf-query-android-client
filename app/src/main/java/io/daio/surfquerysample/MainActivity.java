@@ -9,7 +9,19 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
+import io.daio.surfqueryclient.OnFailureListener;
+import io.daio.surfqueryclient.OnSuccessListener;
+import io.daio.surfqueryclient.SurfQueryClient;
+import io.daio.surfqueryclient.SurfQueryException;
+import io.daio.surfqueryclient.SurfQueryRequest;
+import io.daio.surfqueryclient.SurfQueryResult;
+import io.daio.surfquerysample.network.SurfHttpClient;
+
 public class MainActivity extends AppCompatActivity {
+
+    private SurfHttpClient surfClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +38,39 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        surfClient = new SurfHttpClient(App.getAppContext());
+
+        SurfQueryClient surfQueryClient = new SurfQueryClient("API_KEY_HERE", surfClient, null);
+
+        SurfQueryRequest request = new SurfQueryRequest();
+
+        request.withParam(SurfQueryRequest.SPOT_ID_PARAM, "1449");
+        request.withParam(SurfQueryRequest.START_TIME_PARAM, "8");
+        request.withParam(SurfQueryRequest.END_TIME_PARAM, "22");
+
+        surfQueryClient.makerequest(request, new OnSuccessListener() {
+            @Override
+            public void onSuccess(String url, List<SurfQueryResult> results) {
+                for (int i = 0, len = results.size(); i < len; i++) {
+                    SurfQueryResult result = results.get(i);
+                    System.out.println(result.getDate());
+                    System.out.println(result.getTime());
+                    System.out.println(result.getMaxSwell());
+                    System.out.println(result.getMinSwell());
+                    System.out.println(result.getSolidStar());
+                    System.out.println(result.getFadedStar());
+                    System.out.println(result.getWind());
+                    System.out.println(result.getTimestamp());
+                }
+            }
+        }, new OnFailureListener() {
+            @Override
+            public void onFailure(String s, SurfQueryException e) {
+
+            }
+        });
+
     }
 
     @Override
