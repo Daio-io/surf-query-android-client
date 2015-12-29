@@ -13,6 +13,6 @@ public interface SurfQueryHTTPClient {
         void onSuccess(String url, String resultBody);
     }
 
-    void request(String url, OnFailureCallback onFailureCallback, OnSuccessCallback onSuccessCallback);
+    void request(String url, OnSuccessCallback onSuccessCallback, OnFailureCallback onFailureCallback);
 
 }
