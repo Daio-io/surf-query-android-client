@@ -3,7 +3,10 @@ package io.daio.surfqueryclient;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.json.JSONException;
+
 import java.io.IOException;
+import java.util.List;
 
 public final class SurfQueryClient {
 
@@ -14,6 +17,7 @@ public final class SurfQueryClient {
     private String baseUrl;
     private SurfQueryHTTPClient httpClient;
     private SurfQueryUrlBuilder urlBuilder;
+    private final ResponseTransformer responseTransformer = new ResponseTransformer();
 
     public SurfQueryClient(@NonNull String apiKey, @NonNull SurfQueryHTTPClient httpClient, @Nullable String baseUrl) {
         this.apiKey = apiKey;
@@ -33,17 +37,19 @@ public final class SurfQueryClient {
 
             @Override
             public void onSuccess(String url, String resultBody) {
-
-
+                try {
+                    List<SurfQueryResult> results = responseTransformer.transform(resultBody);
+                    onSuccessListener.onSuccess(url, results);
+                } catch (JSONException e) {
+                    onFailureListener.onFailure(url, new SurfQueryException(e.getMessage(), e));
+                }
             }
-
 
         }, new SurfQueryHTTPClient.OnFailureCallback() {
 
             @Override
             public void onFailure(String url, IOException exception) {
-
-
+                onFailureListener.onFailure(url, new SurfQueryException(exception.getMessage(), exception));
             }
         });
 
