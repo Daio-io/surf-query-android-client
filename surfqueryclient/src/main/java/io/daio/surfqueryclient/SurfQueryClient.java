@@ -29,7 +29,7 @@ public final class SurfQueryClient {
         this.resultTransformer = resultTransformer != null ? resultTransformer : new DefaultResultTransformer();
     }
 
-    public void makerequest(@NonNull SurfQueryRequest surfQueryRequest,
+    public void makeRequest(@NonNull SurfQueryRequest surfQueryRequest,
                             final OnSuccessListener onSuccessListener,
                             final OnFailureListener onFailureListener) {
 

@@ -45,11 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
         final SurfQueryRequest request = new SurfQueryRequest();
 
+        // Surf spot 1449 - Rest Bay
         request.withParam(SurfQueryRequest.SPOT_ID_PARAM, "1449");
+        // Query Data from 8am
         request.withParam(SurfQueryRequest.START_TIME_PARAM, "8");
+        // Until 10pm only
         request.withParam(SurfQueryRequest.END_TIME_PARAM, "22");
 
-        surfQueryClient.makerequest(request, new OnSuccessListener() {
+        surfQueryClient.makeRequest(request, new OnSuccessListener() {
             @Override
             public void onSuccess(String url, List<SurfQueryResult> results) {
                 System.out.println(results);
