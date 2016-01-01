@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
         surfClient = new SurfHttpClient(App.getAppContext());
 
-        SurfQueryClient surfQueryClient = new SurfQueryClient("API_KEY_HERE", surfClient, null);
+        SurfQueryClient surfQueryClient = new SurfQueryClient("3EC4931A9C", surfClient, null, null);
 
-        SurfQueryRequest request = new SurfQueryRequest();
+        final SurfQueryRequest request = new SurfQueryRequest();
 
         request.withParam(SurfQueryRequest.SPOT_ID_PARAM, "1449");
         request.withParam(SurfQueryRequest.START_TIME_PARAM, "8");
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         surfQueryClient.makerequest(request, new OnSuccessListener() {
             @Override
             public void onSuccess(String url, List<SurfQueryResult> results) {
+                System.out.println(results);
                 for (int i = 0, len = results.size(); i < len; i++) {
                     SurfQueryResult result = results.get(i);
                     System.out.println(result.getDate());
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(String s, SurfQueryException e) {
 
+                System.out.println(e.getMessage());
             }
         });
 

@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface OnSuccessListener {
 
-    void onSuccess(String url, @NonNull List<SurfQueryResult> results);
+    void onSuccess(String url, List<SurfQueryResult> results);
 
 }
