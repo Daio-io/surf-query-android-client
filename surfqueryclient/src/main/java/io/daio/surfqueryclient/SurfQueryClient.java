@@ -29,6 +29,11 @@ public final class SurfQueryClient {
         this.resultTransformer = resultTransformer != null ? resultTransformer : new DefaultResultTransformer();
     }
 
+    public SurfQueryClient(@NonNull String apiKey,
+                           @NonNull SurfQueryHTTPClient httpClient) {
+        this(apiKey, httpClient, null, null);
+    }
+
     public void makeRequest(@NonNull SurfQueryRequest surfQueryRequest,
                             final OnSuccessListener onSuccessListener,
                             final OnFailureListener onFailureListener) {
